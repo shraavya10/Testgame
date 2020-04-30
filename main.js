@@ -86,7 +86,7 @@ function draw() {
   //(backgroundImg);
   
   
-  
+   background(backgroundImg);
   if (gameState===PLAY){
     score = score + Math.round(getFrameRate()/60);
     text("Space distance covered in Kms: "+ score,30,50);
