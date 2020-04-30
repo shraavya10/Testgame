@@ -9,7 +9,7 @@ var ground, invisibleGround, groundImage;
 var cloudsGroup, cloudImage;
 var asteroidGroup;
 var obstaclesGroup, obstacle1, obstacle2, obstacle3, obstacle4;
-var backgroundImg;
+var backgroundImg;var backgroundImg1;
 var score=0;
 var jumpSound, collidedSound;
 var angle=0;
@@ -20,7 +20,8 @@ function preload(){
   //jumpSound = loadSound("assets/sounds/jump.wav")
  // collidedSound = loadSound("assets/sounds/collided.wav")
  trexImg=loadImage("images/astro_nobg.png"); 
-  backgroundImg = loadImage("images/space.jpg")
+  backgroundImg1 = loadImage("images/spacebg.jpg");
+  backgroundImg = loadImage("images/space.jpg");
   //sunAnimation = loadImage("assets/sun.png");
   sequenceAnimation = loadAnimation('walking1.png', 'walking2.png', 
   'walking3.png', 'walking4.png', 
@@ -86,7 +87,7 @@ function draw() {
   //trex.debug = true;
   //(backgroundImg);
   
-  background(backgroundImg);
+  background(backgroundImg1);
   
   if (gameState===PLAY){
    // score1=score;
