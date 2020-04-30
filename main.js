@@ -86,7 +86,7 @@ function draw() {
   //trex.debug = true;
   //(backgroundImg);
   
- // background(backgroundImg);
+  background(backgroundImg);
   
   if (gameState===PLAY){
    // score1=score;
