@@ -57,7 +57,7 @@ function setup() {
   
   invisibleGround = createSprite(width/2,height-10,width,125);  
   invisibleGround.shapeColor = "#f4cbaa";
-  backGround=createSprite(width,height);
+  backGround=createSprite(windowWidth,windowHeight);
   backGround.addImage("space",backgroundImg);
    
   gameOver = createSprite(width/2,height/2- 50);
