@@ -21,7 +21,7 @@ function preload(){
  // collidedSound = loadSound("assets/sounds/collided.wav")
  trexImg=loadImage("images/astro_nobg.png"); 
   backgroundImg1 = loadImage("images/spacebg.jpg");
-  backgroundImg = loadImage("images/space3.jpg");
+  backgroundImg = loadImage("images/space.jpg");
   //sunAnimation = loadImage("assets/sun.png");
   sequenceAnimation = loadAnimation('walking1.png', 'walking2.png', 
   'walking3.png', 'walking4.png', 
