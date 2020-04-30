@@ -7,11 +7,12 @@ var trex;var trexImg;
 var ground, invisibleGround, groundImage;
 
 var cloudsGroup, cloudImage;
+var asteroidGroup;
 var obstaclesGroup, obstacle1, obstacle2, obstacle3, obstacle4;
 var backgroundImg;
 var score=0;
 var jumpSound, collidedSound;
-
+var angle=0;
 var gameOver, restart;
 
 
@@ -57,13 +58,13 @@ function setup() {
   
   invisibleGround = createSprite(width/2,height-10,width,125);  
   invisibleGround.shapeColor = "#f4cbaa";
-  backGround=createSprite(windowWidth,windowHeight);
+  backGround=createSprite(width,height);
   backGround.addImage("space",backgroundImg);
    
-  gameOver = createSprite(width/2,height/2- 50);
+  gameOver = createSprite(400,height-100,20,50);
   gameOver.addImage(gameOverImg);
   
-  restart = createSprite(width/2,height/2);
+  restart = createSprite(300,height-100,20,50);
   restart.addImage(restartImg);
   
   gameOver.scale = 0.5;
@@ -77,7 +78,7 @@ function setup() {
 
   cloudsGroup = new Group();
   obstaclesGroup = new Group();
-  
+  asteroidGroup=new Group();
   //score = 10;
 }
 
@@ -85,21 +86,25 @@ function draw() {
   //trex.debug = true;
   //(backgroundImg);
   
+ // background(backgroundImg);
   
-   background(backgroundImg);
   if (gameState===PLAY){
+   // score1=score;
     score = score + Math.round(getFrameRate()/60);
-    text("Space distance covered in Kms: "+ score,30,50);
+
+   // text("Space distance covered in Kms: "+ score,300,50);
        
        // fill("white");
        
     //ground.velocityX = -(6 + 3*score/100);
      backGround.velocityX=-4;
-  
+    // background(backgroundImg).velocityX=-4;
  
     if (backGround.x < 400){
       backGround.x =width/2;
-    }
+   }
+   
+  
     if((touches.length > 0 || keyDown("SPACE")) && trex.y  >= height-120) {
       //jumpSound.play( )
       trex.velocityY = -10;
@@ -115,6 +120,12 @@ function draw() {
     trex.collide(invisibleGround);
     spawnClouds();
     spawnObstacles();
+    /*spawnAsteroids();
+    angle = angle+10; 
+for( var i = 0; i<asteroidGroup.length;i++ ){
+   asteroidGroup.get(i).rotation = 60+angle; 
+  }*/
+
   
     if(cloudsGroup.isTouching(trex)){
 
@@ -124,34 +135,49 @@ function draw() {
         
           
         }
+
+       /* if(asteroidGroup.isTouching(trex)){
+
+          //powerUpSong.play();
+          asteroidGroup.destroyEach();
+          Oxylevel=Oxylevel-1; 
+          
+            
+          }*/
+
     if(obstaclesGroup.isTouching(trex)){
         //collidedSound.play()
         
             obstaclesGroup.destroyEach();
             Oxylevel=Oxylevel-1;
             if(Oxylevel==0){
-               gameState = END;
+             // gameOver.visible = true;
+             // restart.visible = true; 
+              gameState = END;
             }
   }
    if (gameState === END) {
+    //background(backgroundImg).visible=false;
+    trex.visible=false;
     gameOver.visible = true;
     restart.visible = true;
     
     //set velcity of each game object to 0
     backGround.velocityX = 0;
+   // background(backgroundImg).velocityX=0;
     trex.velocityY = 0;
     obstaclesGroup.setVelocityXEach(0);
     cloudsGroup.setVelocityXEach(0);
-    
+   // asteroidGroup.setVelocityXEach(0);
     //change the trex animation
     //trex.changeAnimation("collided",trex_collided);
     
     //set lifetime of the game objects so that they are never destroyed
     obstaclesGroup.setLifetimeEach(-1);
    cloudsGroup.setLifetimeEach(-1);
-   
+  // asteroidGroup.setLifetimeEach(-1);
     
-    if(touches.length>0 || mousePressedOver(restart)) {      
+    if(touches.length>0 || keyDown("SPACE")) {      
       reset();
       touches = []
     }
@@ -161,15 +187,26 @@ function draw() {
   drawSprites();
 
   textSize(20);
-  fill("White")
-  text("Space distance covered in Kms: "+ score,30,50);
-  text("Oxygen:" +Oxylevel,70,70);
+  fill("white");
+  text("Space distance covered in Kms: "+ score,300,350);
+  if (Oxylevel<4){
+    fill("red");
+    text("Oxygen:" +Oxylevel,300,400);
+
+  }
+  else{
+    fill("white");
+    text("Oxygen:" +Oxylevel,300,400);
+
+  }
+  
+
 }
 
 function spawnClouds() {
   //write code here to spawn the clouds
     
-   if (frameCount % 800 === 0) {
+   if (frameCount % 600 === 0) {
    var cloud = createSprite(600,height-40,40,10);
    cloud.y = random(height-160,height-100);
    cloud.velocityX = -6;
@@ -190,6 +227,29 @@ function spawnClouds() {
   }
   
 }
+/*function spawnAsteroids(){
+
+
+  if (frameCount % 800 === 0) {
+    var asteroid= createSprite(600,height-40,40,10);
+    asteroid.y = random(height-160,height-100);
+    asteroid.velocityX = -6;
+    asteroid.addImage(obstacle3);
+    asteroid.scale = 0.5;
+    asteroid.lifetime = 300;
+     //cloud.velocityX = -3;
+     
+      //assign lifetime to the variable
+      asteroid.lifetime = 300;
+     
+     //adjust the depth
+     asteroid.depth = trex.depth;
+     asteroid.depth = trex.depth+1;
+     
+     //add each cloud to the group
+     asteroidGroup.add(asteroid);
+   }
+}*/
 
 function spawnObstacles() {
   if(frameCount % 60 === 0) {
